@@ -9,3 +9,11 @@ declare type CreateUserParams = {
   lastName: string | null;
   photo: string;
 };
+
+
+declare type UpdateUserParams = {
+  firstName: string | null;
+  lastName: string | null;
+  username: string;
+  photo: string;
+};
