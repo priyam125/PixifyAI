@@ -7,7 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { Button } from "@/components/ui/button"
-import "../../globals.css"
+import "@/app/globals.css"
 
 const Sidebar = () => {
   const pathname = usePathname();
