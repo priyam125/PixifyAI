@@ -1,8 +1,8 @@
 "use client";
 
-import { useToast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast";
 import { dataUrl, getImageSize } from "@/lib/utils";
-import { CldImage, CldUploadWidget } from "next-cloudinary"
+import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 
@@ -32,7 +32,7 @@ const MediaUploader = ({
       secureURL: result?.info?.secure_url
     }))
 
-    onValueChange(result?.info?.public_id)
+    onValueChange(result?.info?.public_id)  //takes into account that form changed and updates the public id
 
     toast({
       title: 'Image uploaded successfully',
@@ -53,9 +53,9 @@ const MediaUploader = ({
 
   return (
     <CldUploadWidget
-      uploadPreset="PIXIFY-AI"
+      uploadPreset="PIXIFY-AI" 
       options={{
-        multiple: false,
+        multiple: false,   //only one image upload
         resourceType: "image",
       }}
       onSuccess={onUploadSuccessHandler}
@@ -67,7 +67,7 @@ const MediaUploader = ({
             Original
           </h3>
 
-          {publicId ? (
+          {publicId ? (                     //No public id means upload else image uploaded
             <>
               <div className="cursor-pointer overflow-hidden rounded-[10px]">
                 <CldImage 
@@ -82,7 +82,9 @@ const MediaUploader = ({
               </div>
             </>
           ): (
-            <div className="media-uploader_cta" onClick={() => open()}>
+            //onClick open activated the cloudinary built in image uploader
+            //and then inside we have added a custom buttom with icon for UI isinde the cloudinary uploader
+            <div className="media-uploader_cta" onClick={() => open()}> 
               <div className="media-uploader_cta-image">
                 <Image 
                   src="/assets/icons/add.svg"

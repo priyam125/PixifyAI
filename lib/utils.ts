@@ -1,11 +1,10 @@
 import { aspectRatioOptions } from "@/constants";
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
-
 
 export const handleError = (error: unknown) => {
   if (error instanceof Error) {
@@ -22,59 +21,6 @@ export const handleError = (error: unknown) => {
     throw new Error(`Unknown error: ${JSON.stringify(error)}`);
   }
 };
-
-// DEBOUNCE
-export const debounce = (func: (...args: any[]) => void, delay: number) => {
-  let timeoutId: NodeJS.Timeout | null;
-  return (...args: any[]) => {
-    if (timeoutId) clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => func.apply(null, args), delay);
-  };
-};
-
-// DEEP MERGE OBJECTS
-export const deepMergeObjects = (obj1: any, obj2: any) => {
-  if(obj2 === null || obj2 === undefined) {
-    return obj1;
-  }
-
-  let output = { ...obj2 };
-
-  for (let key in obj1) {
-    if (obj1.hasOwnProperty(key)) {
-      if (
-        obj1[key] &&
-        typeof obj1[key] === "object" &&
-        obj2[key] &&
-        typeof obj2[key] === "object"
-      ) {
-        output[key] = deepMergeObjects(obj1[key], obj2[key]);
-      } else {
-        output[key] = obj1[key];
-      }
-    }
-  }
-
-  return output;
-};
-
-
-// GE IMAGE SIZE
-export type AspectRatioKey = keyof typeof aspectRatioOptions;
-export const getImageSize = (
-  type: string,
-  image: any,
-  dimension: "width" | "height"
-): number => {
-  if (type === "fill") {
-    return (
-      aspectRatioOptions[image.aspectRatio as AspectRatioKey]?.[dimension] ||
-      1000
-    );
-  }
-  return image?.[dimension] || 1000;
-};
-
 
 // PLACEHOLDER LOADER - while image is transforming
 const shimmer = (w: number, h: number) => `
@@ -99,25 +45,64 @@ const toBase64 = (str: string) =>
 export const dataUrl = `data:image/svg+xml;base64,${toBase64(
   shimmer(1000, 1000)
 )}`;
+// ==== End
 
+// DEBOUNCE
+export const debounce = (func: (...args: any[]) => void, delay: number) => {
+  let timeoutId: NodeJS.Timeout | null;
+  return (...args: any[]) => {
+    if (timeoutId) clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => func.apply(null, args), delay);
+  };
+};
 
-// DOWNLOAD IMAGE
-export const download = (url: string, filename: string) => {
-  if (!url) {
-    throw new Error("Resource URL not provided! You need to provide one");
+// DEEP MERGE OBJECTS
+export const deepMergeObjects = (obj1: any, obj2: any) => {
+  if (obj2 === null || obj2 === undefined) {
+    return obj1;
   }
 
-  fetch(url)
-    .then((response) => response.blob())
-    .then((blob) => {
-      const blobURL = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = blobURL;
+  let output = { ...obj2 };
 
-      if (filename && filename.length)
-        a.download = `${filename.replace(" ", "_")}.png`;
-      document.body.appendChild(a);
-      a.click();
-    })
-    .catch((error) => console.log({ error }));
+  for (let key in obj1) {
+    if (obj1.hasOwnProperty(key)) {
+      if (
+        obj1[key] &&
+        typeof obj1[key] === "object" &&
+        obj2[key] &&
+        typeof obj2[key] === "object"
+      ) {
+        output[key] = deepMergeObjects(obj1[key], obj2[key]);
+      } else {
+        output[key] = obj1[key];
+      }
+    }
+  }
+
+  return output;
+};
+
+// GE IMAGE SIZE
+export type AspectRatioKey = keyof typeof aspectRatioOptions;
+
+/**
+ * Calculates the size of an image based on its type and dimension.
+ *
+ * @param type The type of image sizing (e.g. "fill")
+ * @param image The image object
+ * @param dimension The dimension to retrieve (either "width" or "height")
+ * @returns The calculated size of the image
+ */
+export const getImageSize = (
+  type: string,
+  image: any,
+  dimension: "width" | "height"
+): number => {
+  if (type === "fill") {
+    return (
+      aspectRatioOptions[image.aspectRatio as AspectRatioKey]?.[dimension] ||
+      1000
+    );
+  }
+  return image?.[dimension] || 1000;
 };
