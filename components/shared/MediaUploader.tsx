@@ -3,6 +3,8 @@
 import { useToast } from "@/hooks/use-toast";
 import { dataUrl, getImageSize } from "@/lib/utils";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
+// CldUploadWidget is the widget that gives us access to the Cloudinary uploader.
+// CldImage helps us render optimized images depending on the exact width and height.
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 
@@ -24,6 +26,7 @@ const MediaUploader = ({
   const { toast } = useToast()
 
   const onUploadSuccessHandler = (result: any) => {
+    //modifying state data to use in the form
     setImage((prevState: any) => ({
       ...prevState,
       publicId: result?.info?.public_id,

@@ -36,6 +36,7 @@ declare type TransformationFormProps = {
   creditBalance: number;
   data?: IImage | null;
   config?: Transformations | null;
+  router?: any;
 };
 
 declare type Transformations = {
