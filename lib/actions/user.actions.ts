@@ -13,10 +13,6 @@ export async function createUser(user: CreateUserParams) {
 
     const newUser = await User.create(user);
 
-    console.log("user", user);
-
-    console.log("newUser", newUser);
-
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
     handleError(error);
@@ -26,23 +22,16 @@ export async function createUser(user: CreateUserParams) {
 // READ
 export async function getUserById(userId: string) {
   try {
-    console.log("Entered");
-    console.log("userId", userId);
-
     await connectToDatabase();
 
     console.log("Connected to DB");
 
     const user = await User.findOne({ clerkId: userId });
 
-    console.log("user", user);
-
     if (!user) throw new Error("User not found");
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
-    console.log("Entered error");
-
     handleError(error);
   }
 }
@@ -88,14 +77,31 @@ export async function deleteUser(clerkId: string) {
 
 // USE CREDITS
 export async function updateCredits(userId: string, creditFee: number) {
+  console.log("Updating credits");
+  console.log("userId", userId );
+  console.log("creditFee", creditFee );
+  
+  
   try {
     await connectToDatabase();
 
+    console.log("Connected to DB");
+
+    const user = await User.findOne({ _id: userId });
+    if (user) {
+      console.log("User found");
+    } else {
+      console.log("User not found");
+    }
+    
     const updatedUserCredits = await User.findOneAndUpdate(
       { _id: userId },
       { $inc: { creditBalance: creditFee } },
       { new: true }
     );
+
+    console.log("updatedUserCredits", updatedUserCredits );
+
 
     if (!updatedUserCredits) throw new Error("User credits update failed");
 

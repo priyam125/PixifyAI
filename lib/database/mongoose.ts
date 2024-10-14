@@ -27,7 +27,6 @@ export const connectToDatabase = async () => {
 
   //if cached promise exists then use cached promise or create
   //a new connection
-  console.log("MONGODB_URL", MONGODB_URL);
   
   cached.promise =
     cached.promise ||
@@ -37,10 +36,7 @@ export const connectToDatabase = async () => {
     });
     
 
-  cached.conn = await cached.promise;
-
-  console.log("cached.conn", cached.conn);
-  
+  cached.conn = await cached.promise;  
 
   return cached.conn;
 };
