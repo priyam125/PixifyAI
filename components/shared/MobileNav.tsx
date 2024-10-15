@@ -24,8 +24,8 @@ const MobileNav = () => {
         <Image
           src="/assets/images/logo-text.svg"
           alt="logo"
-          width={180}
-          height={28}
+          width={168}
+          height={27}
         />
       </Link>
 
@@ -48,8 +48,8 @@ const MobileNav = () => {
                 <Image
                   src="/assets/images/logo-text.svg"
                   alt="logo"
-                  width={152}
-                  height={23}
+                  width={168}
+                  height={27}
                 />
               </SheetTitle>
               <SheetDescription></SheetDescription>
