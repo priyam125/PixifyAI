@@ -21,12 +21,10 @@ const MobileNav = () => {
   return (
     <header className="header">
       <Link href="/" className="flex items-center gap-2 md:py-2">
-        <Image
-          src="/assets/images/logo-text.svg"
-          alt="logo"
-          width={168}
-          height={27}
-        />
+        <Image src="/logo-icon.png" alt="logo" width={28} height={28} />
+        <span className="text-[#6859FD] font-bold text-[28px] tracking-wider font-fuzzyBubbles gradient-text">
+          Pixify-Ai
+        </span>
       </Link>
 
       <nav className="flex gap-2">

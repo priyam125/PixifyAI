@@ -15,7 +15,8 @@ const Sidebar = () => {
     <aside className="sidebar">
       <div className="flex size-full flex-col gap-4">
         <Link href="/" className="sidebar-logo">
-          <Image src="/logo.png" alt="logo" width={180} height={28} />
+          <Image src="/logo-icon.png" alt="logo" width={28} height={28} />
+          <span className="text-[#6859FD] font-bold text-[32px] tracking-wider font-fuzzyBubbles gradient-text">Pixify-Ai</span>
         </Link>
 
         <nav className="sidebar-nav">

@@ -68,6 +68,7 @@ const config = {
       },
       fontFamily: {
         IBMPlex: ["var(--font-ibm-plex)"],
+        fuzzyBubbles: ["var(--font-fuzzy-bubbles)"],
       },
       backgroundImage: {
         "purple-gradient": "url('/assets/images/gradient-bg.svg')",
